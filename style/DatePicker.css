@@ -1,0 +1,41 @@
+/* Container */
+@import 'react-date-picker/dist/DatePicker.css';
+@import 'react-calendar/dist/Calendar.css';
+@import "tailwindcss/utilities";
+.custom-date-picker .react-date-picker {
+  width: 100%;
+}
+
+.custom-date-picker .react-date-picker__wrapper {
+  @apply w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm bg-white cursor-pointer;
+}
+
+/* Input text */
+.custom-date-picker .react-date-picker__inputGroup__input {
+  @apply text-gray-900 outline-none;
+}
+
+/* Calendar popover */
+.custom-date-picker .react-calendar {
+  @apply rounded-xl border border-gray-300 shadow-xl p-2 bg-white text-gray-900;
+}
+
+/* Month navigation buttons */
+.custom-date-picker .react-calendar__navigation button {
+  @apply hover:bg-gray-200 rounded-md transition;
+}
+
+/* Calendar days */
+.custom-date-picker .react-calendar__tile {
+  @apply rounded-lg p-2 hover:bg-gray-100 transition;
+}
+
+/* Active (selected) date */
+.custom-date-picker .react-calendar__tile--active {
+  @apply bg-black text-white hover:bg-black;
+}
+
+/* Disabled days (past dates) */
+.custom-date-picker .react-calendar__tile--now {
+  @apply font-bold text-black;
+}

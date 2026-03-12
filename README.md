@@ -1,6 +1,6 @@
 # Limousine Booking System
 
-A full-stack web application that allows customers to book limousine rides with customizable options, and enables administrators to manage bookings, vehicles, and monitor business performance through comprehensive analytics.
+A full-stack web application that allows customers to book limousine rides with customizable options, and enables administrators to manage bookings, vehicles, and monitor business performance through comprehensive analytics.(note that the first page (home page) does not get shipped)
 
 ## Project Overview
 

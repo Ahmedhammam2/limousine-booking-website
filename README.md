@@ -68,6 +68,7 @@ This system digitizes the limousine booking process by allowing customers to boo
 - Filter bookings by time period (week or month)
 - Update booking status (confirm, cancel, no-show)
 - Delete bookings
+- Edit existing bookings
 
 #### Analytics Dashboard
 
@@ -153,7 +154,7 @@ The analytics system is designed to answer critical business questions:
 - Can add, edit, or retire vehicles
 - Can update booking statuses (confirm, cancel, no-show)
 - Can delete bookings
-- Cannot modify existing bookings once payment is completed
+- Can modify existing bookings even if the payment is completed
 - **Can access comprehensive analytics dashboard**
 - **Can view business performance metrics across different time periods**
 - **Can export and analyze fleet utilization data**

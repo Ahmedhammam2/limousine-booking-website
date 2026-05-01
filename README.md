@@ -731,7 +731,8 @@ cp .env.example .env.local
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key         | [Stripe Dashboard](https://dashboard.stripe.com/apikeys) |
 | `STRIPE_SECRET_KEY`                  | Stripe secret key              | [Stripe Dashboard](https://dashboard.stripe.com/apikeys) |
 | `STRIPE_WEBHOOK_SECRET`              | Stripe webhook signing secret  | [Stripe Webhooks](https://dashboard.stripe.com/webhooks) |
-| `ADMIN_PASSWORD`                     | Admin panel password           | Choose a strong password                                 |
+| `ADMIN_PASSWORD_HASH`                | Admin panel password hash      | Generate using bcrypt                            |
+| `JWT_SECRET`                         | JSON Web Token secret          | Generate 32-byte random hex string                       |
 
 ## Database Schema
 
@@ -849,8 +850,8 @@ The system uses session-based authentication for admin routes.
 **Login Flow:**
 
 1. Admin enters password at `/admin/login`
-2. Password is verified against `ADMIN_PASSWORD` environment variable
-3. Session cookie is created and stored
+2. Password is verified using bcrypt against `ADMIN_PASSWORD_HASH` environment variable
+3. JWT Session cookie is created and signed using `JWT_SECRET` stored in httpOnly cookie
 4. Admin can access protected routes
 
 **Protected Routes:**
@@ -867,7 +868,8 @@ The system uses session-based authentication for admin routes.
 
 **Security Notes:**
 
-- Password is stored as plain text in environment variables (consider hashing in production)
+- Password is cryptographically hashed with bcrypt
+- Sessions use JWT signed with a secret to prevent forging
 - No rate limiting implemented (should be added)
 - No multi-user support
 
@@ -882,7 +884,6 @@ The analytics system uses MongoDB aggregation pipelines for efficient data proce
 
 ## Known Limitations
 
-- Admin password is stored in plain text (should use hashing)
 - No email notifications for booking confirmations
 - No SMS notifications
 - Customers cannot cancel or modify bookings after payment (refunds are only initiated via admin booking edits)

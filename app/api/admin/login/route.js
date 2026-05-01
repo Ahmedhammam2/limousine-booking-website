@@ -7,7 +7,7 @@ export async function POST(request) {
   const { password } = body;
 
   // Validate password against server-side secret
-  if (verifyPassword(password)) {
+  if (await verifyPassword(password)) {
     // Create an authenticated admin session
     await createSession();
     return NextResponse.json({ success: true });

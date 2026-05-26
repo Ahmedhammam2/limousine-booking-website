@@ -9,7 +9,7 @@ export async function updateCar(formData) {
 
   const name = formData.get("name");
   const type = formData.get("type");
-  const image = formData.get("image");
+  const imageUrl = formData.get("imageUrl");
 
   const capacity = Number(formData.get("capacity"));
   const luggage = Number(formData.get("luggage"));
@@ -29,7 +29,7 @@ export async function updateCar(formData) {
     !carId ||
     !name ||
     !type ||
-    !image ||
+    !imageUrl ||
     capacity <= 0 ||
     luggage < 0 ||
     minprice <= 0 ||
@@ -47,7 +47,7 @@ export async function updateCar(formData) {
     {
       name,
       type,
-      image,
+      imageUrl,
       capacity,
       luggage,
       minprice,

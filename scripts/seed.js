@@ -1,64 +1,55 @@
+import dotenv from "dotenv";
+import Car from "../models/cars.js";
+import connectDB from "../lib/mongodb.js";
+
+dotenv.config();
+
+const cars = [
+  {
+    type: "Sports",
+    name: "Mercedes amg gt",
+    imageUrl: "https://res.cloudinary.com/dpxnw7x1f/image/upload/v1779804087/download_2_wfu2dx.jpg",
+    capacity: 2,
+    luggage: 1,
+    pricePerHour: 150,
+    pricePermile: 10,
+    minprice: 200,
+    minHours: 2,
+    isAvailable: true,
+    quantity: 1,
+    status: "active",
+  },
+  {
+    type: "Hatchback",
+    name: "Cupra Leon",
+    imageUrl: "https://res.cloudinary.com/dpxnw7x1f/image/upload/v1779803955/Cupra_Leon_Roof_Bars___Thule_z1aks6.jpg",
+    capacity: 4,
+    luggage: 2,
+    pricePerHour: 50,
+    pricePermile: 5,
+    minprice: 70,
+    minHours: 2,
+    isAvailable: true,
+    quantity: 2,
+    status: "active",
+  },
+];
+
 async function seed() {
   try {
-    const { default: connectDB } = await import(
-      "../limo-booking/lib/mongodb.js"
-    );
-    const { default: Car } = await import("../limo-booking/models/cars.js");
     await connectDB();
 
-    const cars = await Car.insertMany([
-      {
-        type: "sedan",
-        name: "mercedes e class",
-        image: "/images/mercedes e class.png",
-        capacity: 4,
-        luggage: 2,
-        pricePerHour: 50,
-        pricePermile: 2,
-        minprice: 100,
-        minHours: 2,
-        isAvailable: true,
-        features: ["air conditioning", "leather seats", "bluetooth"],
-      },
-      {
-        type: "suv",
-        name: "cadillac escalade",
-        image: "/images/mercedes e class.png",
-        capacity: 6,
-        luggage: 4,
-        pricePerHour: 80,
-        pricePermile: 3,
-        minprice: 150,
-        minHours: 2,
-        isAvailable: true,
-        features: ["air conditioning", "leather seats", "bluetooth", "wifi"],
-      },
-      {
-        type: "van",
-        name: "ford transit",
-        image: "/images/mercedes e class.png",
-        capacity: 12,
-        luggage: 8,
-        pricePerHour: 120,
-        pricePermile: 4,
-        minprice: 200,
-        minHours: 2,
-        isAvailable: true,
-        features: ["air conditioning", "bluetooth", "wifi"],
-      },
-    ]);
-    console.log("\n📋 Cars added to database:");
-    cars.forEach((car, index) => {
-      console.log(`\n${index + 1}. ${car.name}`);
-      console.log(`   Type: ${car.type}`);
-      console.log(`   Capacity: ${car.capacity} passengers`);
-      console.log(
-        `   Price: $${car.pricePerHour}/hour or $${car.pricePermile}/mile`
-      );
-      console.log(`url Image: ${car.image}`);
-    });
+    console.log("Connected to MongoDB");
+
+
+    await Car.insertMany(cars);
+
+    console.log("✅ Cars seeded successfully!");
+
+    process.exit();
   } catch (error) {
-    console.log("seeding error", error);
+    console.error("Seeding failed:", error);
+    process.exit(1);
   }
 }
 

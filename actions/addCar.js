@@ -10,7 +10,7 @@ export async function addCar(formData) {
 
   const name = formData.get("name");
   const type = formData.get("type");
-  const image = formData.get("image");
+  const imageUrl = formData.get("imageUrl");
 
   // Convert string inputs to numbers for validation
   const capacity = Number(formData.get("capacity"));
@@ -27,7 +27,7 @@ export async function addCar(formData) {
   if (
     !name ||
     !type ||
-    !image ||
+    !imageUrl ||
     capacity <= 0 ||
     luggage < 0 ||
     minprice <= 0 ||
@@ -43,7 +43,7 @@ export async function addCar(formData) {
   await Car.create({
     name,
     type,
-    image,
+    imageUrl,
     capacity,
     luggage,
     minprice,

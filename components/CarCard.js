@@ -26,7 +26,7 @@ export default function CarCard({ car, variant = "default" }) {
       {/* Car Image Container */}
       <div className={`relative w-full ${imageHeight} mb-3 sm:mb-4`}>
         <NextImage
-          src={car.image}
+          src={car.imageUrl}
           alt={car.name}
           fill
           className="object-cover rounded-md"
@@ -43,7 +43,9 @@ export default function CarCard({ car, variant = "default" }) {
           Capacity: {car.capacity} passengers
         </p>
         <p className="text-sm sm:text-base">Luggage: {car.luggage} bags</p>
-        <p className="text-sm sm:text-base">Minimum Price: ${car.minprice}</p>
+        <p className="text-sm sm:text-base">Price per Hour: ${car.pricePerHour}</p>
+        <p className="text-sm sm:text-base">Price per Mile: ${car.pricePermile}</p>
+        <p className="text-sm sm:text-base text-gray-400 mt-1 text-xs">Minimum Price: ${car.minprice}</p>
       </div>
     </div>
   );

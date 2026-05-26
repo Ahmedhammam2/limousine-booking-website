@@ -1,27 +1,194 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-background: #0a0a0a;
+  --color-foreground: #ffffff;
+  --color-primary-blue: #2578ff;
+  --color-primary-blue-hover: #1a5ecc;
+  --color-secondary-gray: #e8e8e8;
+  --color-secondary-gray-hover: #cfcfcf;
+  
+  --radius-sm: 5px;
+  --radius-DEFAULT: 5px;
+  --radius-md: 5px;
+  --radius-lg: 5px;
+  --radius-xl: 5px;
+  --radius-2xl: 5px;
+  --radius-3xl: 5px;
+  --radius-1/2: 5px;
+  --radius-full: 50%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background-color: var(--color-background) !important;
+  color: var(--color-foreground) !important;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Ensure global borders/strokes are white */
+*, ::before, ::after {
+  border-color: #ffffff;
+}
+
+/* Inputs and Forms */
+input, textarea, select {
+  background-color: transparent !important;
+  color: #ffffff !important;
+  border: 1px solid #ffffff !important;
+  border-radius: 5px !important;
+}
+
+/* Base button styles applied globally to ensure consistency and correct radii */
+button, .btn, a.btn {
+  border-radius: 5px !important;
+}
+
+/* Automatic global mapping: Convert previously hardcoded button styles to our new brand overrides */
+button.bg-black, button.bg-blue-500, button.bg-blue-600, button.bg-gray-900,
+a.bg-black, a.bg-blue-500, a.bg-blue-600, a.bg-gray-900 {
+  background-color: var(--color-primary-blue) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--color-primary-blue) !important;
+}
+button.bg-black:hover:not(:disabled), button.bg-blue-500:hover:not(:disabled), button.bg-blue-600:hover:not(:disabled), button.bg-gray-900:hover:not(:disabled),
+a.bg-black:hover, a.bg-blue-500:hover, a.bg-blue-600:hover, a.bg-gray-900:hover {
+  background-color: var(--color-primary-blue-hover) !important;
+  border-color: var(--color-primary-blue-hover) !important;
+}
+
+button.bg-white, button.text-black.border, button.bg-gray-200,
+a.bg-white, a.text-black.border, a.bg-gray-200 {
+  background-color: var(--color-secondary-gray) !important;
+  color: #0a0a0a !important;
+  border: 1px solid var(--color-secondary-gray) !important;
+  font-weight: 600;
+}
+button.bg-white:hover:not(:disabled), button.text-black.border:hover:not(:disabled), button.bg-gray-200:hover:not(:disabled),
+a.bg-white:hover, a.text-black.border:hover, a.bg-gray-200:hover {
+  background-color: var(--color-secondary-gray-hover) !important;
+  border-color: var(--color-secondary-gray-hover) !important;
+}
+
+/* Primary Button Modifier */
+.btn-primary {
+  background-color: var(--color-primary-blue) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--color-primary-blue) !important;
+  border-radius: 5px !important;
+  transition: all 0.2s ease-in-out;
+}
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-primary-blue-hover) !important;
+  border-color: var(--color-primary-blue-hover) !important;
+}
+
+/* Secondary Button Modifier */
+.btn-secondary {
+  background-color: var(--color-secondary-gray) !important;
+  color: #0a0a0a !important;
+  border: 1px solid var(--color-secondary-gray) !important;
+  border-radius: 5px !important;
+  transition: all 0.2s ease-in-out;
+  font-weight: 600;
+}
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--color-secondary-gray-hover) !important;
+  border-color: var(--color-secondary-gray-hover) !important;
+}
+
+/* Update any blinding white background cards over to dark bg with white borders to fit the theme */
+.bg-white {
+  background-color: #0a0a0a !important;
+  border: 1px solid #ffffff !important;
+}
+/* Ensure text inside elements that were previously dark-on-white are now visible */
+.text-black {
+  color: #ffffff !important;
+}
+.text-gray-600, .text-gray-700, .text-gray-800, .text-gray-900 {
+  color: #d1d1d1 !important;
+}
+.bg-gray-100, .bg-gray-200, .bg-gray-50 {
+  background-color: #141414 !important;
+}
+.hover\:bg-gray-50:hover, .hover\:bg-gray-100:hover, .hover\:bg-gray-200:hover, .hover\:bg-white:hover {
+  background-color: #2a2a2a !important;
+  color: #ffffff !important;
+}
+
+/* ------------------------------------------- */
+/* GLOBALLY ENFORCE DARK THEME ON ALL PICKERS  */
+/* ------------------------------------------- */
+
+/* 1. react-calendar (Date Picker Popover) */
+.react-calendar {
+  border: 1px solid #ffffff !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-radius: 0.75rem;
+  padding: 0.5rem;
+}
+.react-calendar__navigation button, .react-calendar__tile {
+  color: #ffffff !important;
+  background-color: transparent !important;
+  border-radius: 0.5rem;
+}
+.react-calendar__navigation button:hover:not(:disabled), .react-calendar__tile:hover:not(:disabled) {
+  background-color: #2a2a2a !important;
+}
+.react-calendar__tile--active, .react-calendar__tile--hasActive {
+  background-color: var(--color-primary-blue) !important;
+  color: #ffffff !important;
+}
+.react-calendar__tile--now {
+  color: var(--color-primary-blue) !important;
+  font-weight: bold;
+}
+.react-calendar__tile:disabled {
+  color: #666666 !important;
+  background-color: transparent !important;
+}
+.react-calendar__navigation__arrow {
+  color: #ffffff !important;
+}
+
+/* 2. react-date-picker (Input Wrapper) */
+.react-date-picker__wrapper {
+  background-color: transparent !important;
+  border-color: #ffffff !important;
+  color: #ffffff !important;
+}
+.react-date-picker__inputGroup__input {
+  color: #ffffff !important;
+}
+.react-date-picker__button svg {
+  stroke: #ffffff !important;
+}
+
+/* 3. react-datepicker (Time Picker Popover) */
+.react-datepicker,
+.react-datepicker__time-container,
+.react-datepicker__time,
+.react-datepicker__time-box {
+  background-color: #000000 !important;
+  border-color: #333 !important;
+  color: #ffffff !important;
+}
+.react-datepicker__header,
+.react-datepicker-time__header {
+  background-color: #000000 !important;
+  border-bottom: 1px solid #333 !important;
+  color: #ffffff !important;
+}
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item {
+  color: #ffffff !important;
+  background-color: #000000 !important;
+}
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item:hover {
+  background-color: #2a2a2a !important;
+}
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected,
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--active {
+  background-color: var(--color-primary-blue) !important;
+  color: #ffffff !important;
 }

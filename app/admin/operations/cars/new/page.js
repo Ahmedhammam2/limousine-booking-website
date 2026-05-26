@@ -2,10 +2,53 @@
 
 import { useState } from "react";
 import { addCar } from "@/actions/addCar";
+import toast from "react-hot-toast";
 
 export default function NewCar() {
   const [capacity, setCapacity] = useState(1);
   const [luggage, setLuggage] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const file = formData.get("imageFile");
+
+    if (!file || file.size === 0) {
+      toast.error("Please select an image");
+      return;
+    }
+
+    setIsUploading(true);
+    const uploadToast = toast.loading("Uploading image...");
+
+    try {
+      const uploadData = new FormData();
+      uploadData.append("file", file);
+      
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        body: uploadData,
+      });
+
+      if (!res.ok) throw new Error("Image upload failed");
+      const { url } = await res.json();
+
+      formData.set("imageUrl", url);
+      formData.delete("imageFile");
+
+      await addCar(formData);
+      toast.success("Car added successfully", { id: uploadToast });
+    } catch (error) {
+      if (error?.message === "NEXT_REDIRECT" || error?.digest?.startsWith?.("NEXT_REDIRECT")) {
+        throw error;
+      }
+      console.error(error);
+      toast.error(error.message || "Failed to upload image or add car", { id: uploadToast });
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 py-4 sm:py-6 md:py-10 px-4 sm:px-6">
@@ -14,7 +57,7 @@ export default function NewCar() {
           Add New Car
         </h1>
 
-        <form action={addCar} className="space-y-6 sm:space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
           {/* 1. Basic Info */}
           <section className="space-y-3 sm:space-y-4">
             <h2 className="text-base sm:text-lg font-semibold border-b pb-2">
@@ -83,13 +126,14 @@ export default function NewCar() {
 
             <div>
               <label className="block font-medium text-sm sm:text-base mb-1">
-                Image URL
+                Car Image
               </label>
               <input
-                name="image"
+                type="file"
+                name="imageFile"
+                accept="image/*"
                 required
                 className="w-full border rounded px-3 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-black"
-                placeholder="https://example.com/car.png"
               />
             </div>
           </section>
@@ -210,8 +254,11 @@ export default function NewCar() {
             </div>
           </section>
 
-          <button className="w-full bg-black text-white py-2.5 sm:py-3 rounded hover:bg-gray-800 transition">
-            Create Car
+          <button 
+            disabled={isUploading}
+            className="w-full bg-black text-white py-2.5 sm:py-3 rounded hover:bg-gray-800 transition disabled:bg-gray-400"
+          >
+            {isUploading ? "Uploading & Creating..." : "Create Car"}
           </button>
         </form>
       </div>

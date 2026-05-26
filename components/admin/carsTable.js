@@ -67,7 +67,7 @@ export default function CarsTable({ cars }) {
 
                 <td className="p-2 border">
                   <img
-                    src={car.image}
+                    src={car.imageUrl}
                     alt={car.name}
                     className="w-20 h-12 object-cover"
                   />
@@ -132,7 +132,7 @@ export default function CarsTable({ cars }) {
           <div key={car._id} className="border rounded-lg p-4 bg-white shadow">
             <div className="flex gap-3 mb-3">
               <img
-                src={car.image}
+                src={car.imageUrl}
                 alt={car.name}
                 className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded"
               />

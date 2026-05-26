@@ -345,7 +345,7 @@ export default function BookingForm({ isEditing, initialData, bookingId }) {
             <button
               type="button"
               className="w-full sm:w-1/2 py-2.5 sm:py-3 text-sm sm:text-base border border-black text-black bg-white rounded-md hover:bg-black hover:text-white transition"
-              onClick={() => router.push("/")}
+              onClick={() => router.back()}
             >
               Cancel
             </button>

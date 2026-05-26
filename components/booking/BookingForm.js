@@ -24,7 +24,9 @@ import BookingMap from "./BookingMap";
  * - Calculates start/end times
  * - Redirects to available cars page
  */
-export default function BookingForm({ isEditing, initialData, bookingId }) {
+import { Suspense } from "react";
+
+function BookingFormInner({ isEditing, initialData, bookingId }) {
   const searchParams = useSearchParams();
   // Track if we're restoring from URL params to prevent unwanted side effects
   const isCommingFromUrl = useRef(true);
@@ -377,5 +379,13 @@ export default function BookingForm({ isEditing, initialData, bookingId }) {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function BookingForm(props) {
+  return (
+    <Suspense fallback={<div className="p-4 text-center">Loading booking form...</div>}>
+      <BookingFormInner {...props} />
+    </Suspense>
   );
 }

@@ -7,7 +7,9 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-export default function ConfirmPage() {
+import { Suspense } from "react";
+
+function ConfirmPageContent() {
   const [car, setCar] = useState(null);
   const searchParams = useSearchParams();
   const isEditing = searchParams.get("edit") === "true";
@@ -413,6 +415,14 @@ export default function ConfirmPage() {
         </>
       )}
     </div>
+  );
+}
+
+export default function ConfirmPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center">Loading confirmation...</div>}>
+      <ConfirmPageContent />
+    </Suspense>
   );
 }
 

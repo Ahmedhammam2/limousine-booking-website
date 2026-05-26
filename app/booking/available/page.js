@@ -24,7 +24,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import CarCard from "../../../components/CarCard";
 
-export default function AvailablePage() {
+import { Suspense } from "react";
+
+function AvailablePageContent() {
   const params = useSearchParams();
   const paramsString = params.toString();
   const isEditing = params.get("edit") === "true";
@@ -223,5 +225,13 @@ export default function AvailablePage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function AvailablePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center">Loading vehicles...</div>}>
+      <AvailablePageContent />
+    </Suspense>
   );
 }

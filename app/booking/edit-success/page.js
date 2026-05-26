@@ -3,7 +3,9 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function EditSuccessPage() {
+import { Suspense } from "react";
+
+function EditSuccessPageContent() {
   const searchParams = useSearchParams();
   const bookingId = searchParams.get("bookingId");
   const [booking, setBooking] = useState(null);
@@ -101,6 +103,14 @@ export default function EditSuccessPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function EditSuccessPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center">Loading...</div>}>
+      <EditSuccessPageContent />
+    </Suspense>
   );
 }
 

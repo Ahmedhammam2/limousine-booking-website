@@ -2,7 +2,9 @@
 
 import { useSearchParams, useRouter } from "next/navigation";
 
-export default function CancelPage() {
+import { Suspense } from "react";
+
+function CancelPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -77,5 +79,13 @@ export default function CancelPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function CancelPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-gray-50">Loading...</div>}>
+      <CancelPageContent />
+    </Suspense>
   );
 }

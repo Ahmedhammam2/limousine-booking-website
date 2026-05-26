@@ -29,6 +29,7 @@ This system digitizes the limousine booking process by allowing customers to boo
 ### External Services
 
 - Stripe (Payments)
+- Cloudinary (Image Hosting & Management)
 - Google Maps Platform APIs
   - Directions API
   - Distance Matrix API
@@ -44,6 +45,7 @@ This system digitizes the limousine booking process by allowing customers to boo
 - React Time Picker
 - React Calendar
 - React Icons
+- Bcrypt & Jose (Secure JWT Authentication)
 
 ## Features
 
@@ -61,8 +63,9 @@ This system digitizes the limousine booking process by allowing customers to boo
 
 #### Booking & Vehicle Management
 
+- Secure JWT-based Authentication with bcrypt password hashing
 - View all available vehicles and their specifications
-- Add, edit, or retire vehicles
+- Add, edit, or retire vehicles with integrated Cloudinary cloud image uploads
 - View all customer bookings
 - Search for vehicles and bookings by ID
 - Filter bookings by time period (week or month)

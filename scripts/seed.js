@@ -39,12 +39,12 @@ async function seed() {
   try {
     await connectDB();
 
-    console.log("Connected to MongoDB");
+
 
 
     await Car.insertMany(cars);
 
-    console.log("✅ Cars seeded successfully!");
+
 
     process.exit();
   } catch (error) {

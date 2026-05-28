@@ -5,7 +5,7 @@ export async function POST(request) {
   // Parse admin login credentials
   const body = await request.json();
   const { password } = body;
-  console.log("LOGIN ATTEMPT:", password, "HASH FROM ENV:", process.env.ADMIN_PASSWORD_HASH);
+
 
   // Validate password against server-side secret
   if (await verifyPassword(password)) {

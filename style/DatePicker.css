@@ -1,0 +1,92 @@
+/* Container */
+@import 'react-date-picker/dist/DatePicker.css';
+@import 'react-calendar/dist/Calendar.css';
+
+.react-date-picker {
+  width: 100%;
+}
+
+.react-date-picker__wrapper {
+  width: 100%;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  border: 1px solid #ffffff !important;
+  background-color: transparent !important;
+  color: #ffffff !important;
+}
+
+/* Input text */
+.react-date-picker__inputGroup__input {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+/* Calendar popover */
+.react-calendar {
+  border-radius: 0.75rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  padding: 0.5rem;
+  border: 1px solid #ffffff !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* Month navigation buttons */
+.react-calendar__navigation button {
+  border-radius: 0.375rem;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  color: #ffffff !important;
+  background-color: transparent;
+}
+.react-calendar__navigation button:hover:not(:disabled) {
+  background-color: #2a2a2a !important;
+}
+
+/* Calendar days */
+.react-calendar__tile {
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  color: #ffffff !important;
+  background-color: transparent;
+}
+.react-calendar__tile:hover:not(:disabled) {
+  background-color: #2a2a2a !important;
+}
+
+/* Active (selected) date */
+.react-calendar__tile--active {
+  background-color: var(--color-primary-blue) !important;
+  color: #ffffff !important;
+}
+
+.react-calendar__tile--hasActive {
+  background-color: var(--color-primary-blue-hover) !important;
+}
+
+/* Disabled days (past dates) */
+.react-calendar__tile--now {
+  font-weight: bold;
+  color: var(--color-primary-blue) !important;
+}
+
+.react-calendar__tile:disabled {
+  color: #666666 !important;
+  background-color: transparent !important;
+}
+
+/* Svg Icons */
+.react-date-picker__button svg {
+  stroke: #ffffff !important;
+}
+.react-calendar__navigation__arrow {
+  color: #ffffff !important;
+}

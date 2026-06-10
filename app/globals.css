@@ -1,0 +1,255 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #0d0d0d;
+  --color-surface: #171717;
+  --color-surface-hover: #222222;
+  --color-border: #262626;
+  --color-foreground: #f5f5f5;
+  --color-muted: #a3a3a3;
+  --color-primary-blue: #2578ff;
+  --color-primary-blue-hover: #1a5ecc;
+  --color-secondary-gray: #e8e8e8;
+  --color-secondary-gray-hover: #cfcfcf;
+  
+  --radius-sm: 5px;
+  --radius-DEFAULT: 5px;
+  --radius-md: 5px;
+  --radius-lg: 5px;
+  --radius-xl: 5px;
+  --radius-2xl: 5px;
+  --radius-3xl: 5px;
+  --radius-1/2: 5px;
+  --radius-full: 50%;
+}
+
+body {
+  background-color: var(--color-background) !important;
+  color: var(--color-foreground) !important;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Ensure global borders/strokes are dark grey */
+*, ::before, ::after {
+  border-color: var(--color-border);
+}
+
+/* Inputs and Forms */
+input, textarea, select {
+  background-color: transparent !important;
+  color: #ffffff !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 5px !important;
+}
+
+/* Base button styles applied globally to ensure consistency and correct radii */
+button, .btn, a.btn {
+  border-radius: 5px !important;
+}
+
+/* Automatic global mapping: Convert previously hardcoded button styles to our new brand overrides */
+button.bg-black, button.bg-blue-500, button.bg-blue-600, button.bg-gray-900,
+a.bg-black, a.bg-blue-500, a.bg-blue-600, a.bg-gray-900 {
+  background-color: var(--color-primary-blue) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--color-primary-blue) !important;
+}
+button.bg-black:hover:not(:disabled), button.bg-blue-500:hover:not(:disabled), button.bg-blue-600:hover:not(:disabled), button.bg-gray-900:hover:not(:disabled),
+a.bg-black:hover, a.bg-blue-500:hover, a.bg-blue-600:hover, a.bg-gray-900:hover {
+  background-color: var(--color-primary-blue-hover) !important;
+  border-color: var(--color-primary-blue-hover) !important;
+}
+
+button.bg-white, button.text-black.border, button.bg-gray-200,
+a.bg-white, a.text-black.border, a.bg-gray-200 {
+  background-color: var(--color-secondary-gray) !important;
+  color: #0a0a0a !important;
+  border: 1px solid var(--color-secondary-gray) !important;
+  font-weight: 600;
+}
+button.bg-white:hover:not(:disabled), button.text-black.border:hover:not(:disabled), button.bg-gray-200:hover:not(:disabled),
+a.bg-white:hover, a.text-black.border:hover, a.bg-gray-200:hover {
+  background-color: var(--color-secondary-gray-hover) !important;
+  border-color: var(--color-secondary-gray-hover) !important;
+}
+
+/* Primary Button Modifier */
+.btn-primary {
+  background-color: var(--color-primary-blue) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--color-primary-blue) !important;
+  border-radius: 5px !important;
+  transition: all 0.2s ease-in-out;
+}
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-primary-blue-hover) !important;
+  border-color: var(--color-primary-blue-hover) !important;
+}
+
+/* Secondary Button Modifier */
+.btn-secondary {
+  background-color: var(--color-secondary-gray) !important;
+  color: #0a0a0a !important;
+  border: 1px solid var(--color-secondary-gray) !important;
+  border-radius: 5px !important;
+  transition: all 0.2s ease-in-out;
+  font-weight: 600;
+}
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--color-secondary-gray-hover) !important;
+  border-color: var(--color-secondary-gray-hover) !important;
+}
+
+/* Refined Dark Surfaces */
+.bg-white {
+  background-color: var(--color-surface) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: none !important; /* Remove shadows on dark background for cleaner look */
+}
+
+/* Background overrides for common Tailwind light backgrounds */
+.bg-gray-50, .bg-gray-100, .bg-gray-200, .bg-gray-300,
+.bg-slate-50, .bg-slate-100, .bg-slate-200, .bg-slate-300,
+.bg-zinc-50, .bg-zinc-100, .bg-zinc-200, .bg-zinc-300 {
+  background-color: var(--color-background) !important;
+}
+
+.bg-gray-800, .bg-gray-900, .bg-zinc-800, .bg-zinc-900 {
+  background-color: var(--color-surface) !important;
+}
+
+/* Badge and Status Overrides - Convert light boxes to subtle dark boxes */
+.bg-green-50, .bg-green-100, .bg-green-200 { background-color: rgba(34, 197, 94, 0.1) !important; border: 1px solid rgba(34, 197, 94, 0.4) !important; }
+.text-green-600, .text-green-700, .text-green-800 { color: #4ade80 !important; }
+
+.bg-red-50, .bg-red-100, .bg-red-200 { background-color: rgba(239, 68, 68, 0.1) !important; border: 1px solid rgba(239, 68, 68, 0.4) !important; }
+.text-red-500, .text-red-600, .text-red-700, .text-red-800 { color: #f87171 !important; }
+
+.bg-yellow-50, .bg-yellow-100, .bg-yellow-200, .bg-amber-50, .bg-amber-100, .bg-amber-200 { background-color: rgba(245, 158, 11, 0.1) !important; border: 1px solid rgba(245, 158, 11, 0.4) !important; }
+.text-yellow-600, .text-yellow-700, .text-yellow-800, .text-amber-700, .text-amber-800, .text-amber-900 { color: #fbbf24 !important; }
+
+.bg-blue-50, .bg-blue-100, .bg-blue-200 { background-color: rgba(37, 120, 255, 0.1) !important; border: 1px solid rgba(37, 120, 255, 0.4) !important; }
+.text-blue-500, .text-blue-600, .text-blue-700, .text-blue-800 { color: #60a5fa !important; }
+
+/* Table Refinements */
+thead.bg-gray-100, thead.bg-gray-200, thead.bg-zinc-100, thead.bg-zinc-200 {
+  background-color: var(--color-surface) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+}
+
+tr.bg-gray-100, tr.bg-zinc-100, .bg-gray-50 {
+  background-color: #121212 !important; /* Slightly distinct for alternating rows/headers */
+}
+
+/* Specific component overrides */
+.max-w-xl.mx-auto.bg-yellow-50, .max-w-xl.mx-auto.bg-amber-50 {
+  background-color: var(--color-surface) !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+}
+
+/* Text Overrides */
+.text-black {
+  color: var(--color-foreground) !important;
+}
+
+.text-gray-900, .text-gray-800, .text-gray-700, .text-zinc-900, .text-zinc-800, .text-zinc-700 {
+  color: var(--color-foreground) !important;
+}
+
+.text-gray-600, .text-gray-500, .text-gray-400, .text-zinc-600, .text-zinc-500, .text-zinc-400 {
+  color: var(--color-muted) !important;
+}
+
+/* Interaction States */
+.hover\:bg-gray-50:hover, .hover\:bg-gray-100:hover, .hover\:bg-gray-200:hover, .hover\:bg-white:hover {
+  background-color: var(--color-surface-hover) !important;
+  color: #ffffff !important;
+}
+
+/* Shadow Overrides */
+.shadow, .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl {
+  box-shadow: none !important;
+  border: 1px solid var(--color-border);
+}
+
+/* ------------------------------------------- */
+/* GLOBALLY ENFORCE DARK THEME ON ALL PICKERS  */
+/* ------------------------------------------- */
+
+/* 1. react-calendar (Date Picker Popover) */
+.react-calendar {
+  border: 1px solid #ffffff !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-radius: 0.75rem;
+  padding: 0.5rem;
+}
+.react-calendar__navigation button, .react-calendar__tile {
+  color: #ffffff !important;
+  background-color: transparent !important;
+  border-radius: 0.5rem;
+}
+.react-calendar__navigation button:hover:not(:disabled), .react-calendar__tile:hover:not(:disabled) {
+  background-color: #2a2a2a !important;
+}
+.react-calendar__tile--active, .react-calendar__tile--hasActive {
+  background-color: var(--color-primary-blue) !important;
+  color: #ffffff !important;
+}
+.react-calendar__tile--now {
+  color: var(--color-primary-blue) !important;
+  font-weight: bold;
+}
+.react-calendar__tile:disabled {
+  color: #666666 !important;
+  background-color: transparent !important;
+}
+.react-calendar__navigation__arrow {
+  color: #ffffff !important;
+}
+
+/* 2. react-date-picker (Input Wrapper) */
+.react-date-picker__wrapper {
+  background-color: transparent !important;
+  border-color: #333333 !important;
+  color: #ffffff !important;
+}
+.react-date-picker__inputGroup__input {
+  color: #ffffff !important;
+}
+.react-date-picker__button svg {
+  stroke: #ffffff !important;
+}
+
+/* 3. react-datepicker (Time Picker Popover) */
+.react-datepicker,
+.react-datepicker__time-container,
+.react-datepicker__time,
+.react-datepicker__time-box {
+  background-color: #000000 !important;
+  border-color: #333 !important;
+  color: #ffffff !important;
+}
+.react-datepicker__header,
+.react-datepicker-time__header {
+  background-color: #000000 !important;
+  border-bottom: 1px solid #333 !important;
+  color: #ffffff !important;
+}
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item {
+  color: #ffffff !important;
+  background-color: #000000 !important;
+}
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item:hover {
+  background-color: #2a2a2a !important;
+}
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected,
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--active {
+  background-color: var(--color-primary-blue) !important;
+  color: #ffffff !important;
+}
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--disabled {
+  color: #666666 !important;
+  cursor: not-allowed !important;
+  background-color: transparent !important;
+}

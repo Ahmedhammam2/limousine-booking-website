@@ -70,7 +70,7 @@ export async function POST(request) {
             <p><strong>Date:</strong> ${formattedDate}</p>
             <p><strong>Route:</strong> ${body.pickupLocation} ➔ ${body.dropoffLocation}</p>
             <p><strong>Price:</strong> $${body.finalPrice}</p>
-            <a href="${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/admin" style="background:#0070f3;color:white;padding:10px 20px;text-decoration:none;border-radius:5px;">Open Admin Panel</a>
+            <a href="${process.env.NEXT_PUBLIC_URL}/admin" style="background:#0070f3;color:white;padding:10px 20px;text-decoration:none;border-radius:5px;">Open Admin Panel</a>
           `,
         });
 

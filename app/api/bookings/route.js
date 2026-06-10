@@ -62,7 +62,7 @@ export async function POST(request) {
         await resend.emails.send({
           from: "Limo Booking <onboarding@resend.dev>",
           to: "hammam.m.ahmed@gmail.com", // Your admin email
-          subject: "🚨 New Ride Request Logged!",
+          subject: "New Ride Request Logged!",
           html: `
             <h3>A new booking request requires review</h3>
             <p><strong>Customer:</strong> ${body.customerName}</p>
@@ -70,7 +70,7 @@ export async function POST(request) {
             <p><strong>Date:</strong> ${formattedDate}</p>
             <p><strong>Route:</strong> ${body.pickupLocation} ➔ ${body.dropoffLocation}</p>
             <p><strong>Price:</strong> $${body.finalPrice}</p>
-            <a href="${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/admin" style="background:#0070f3;color:white;padding:10px 20px;text-decoration:none;border-radius:5px;">Open Admin Panel</a>
+            <a href="${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/admin" style="background:#0070f3;color:white;padding:10px 20px;text-decoration:none;border-radius:5px;">Open Admin Panel</a>
           `,
         });
 
@@ -79,7 +79,7 @@ export async function POST(request) {
         await resend.emails.send({
           from: "Limo Booking <onboarding@resend.dev>",
           to: "hammam.m.ahmed@gmail.com", // Temporarily your email for testing free mode
-          subject: "🚕 Your Limo Ride Request Received",
+          subject: "Your Limo Ride Request Received",
           html: `
             <h2>Hello ${body.customerName},</h2>
             <p>Thank you for choosing our luxury transfer service. We have received your ride request details:</p>
@@ -89,7 +89,7 @@ export async function POST(request) {
             <p><strong>Drop-off Location:</strong> ${body.dropoffLocation}</p>
             <p><strong>Estimated Cost:</strong> $${body.finalPrice}</p>
             <hr />
-            <p>Our dispatch team is currently reviewing vehicle availability. We will send you a final confirmation confirmation shortly.</p>
+            
           `,
         });
       } catch (emailError) {

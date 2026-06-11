@@ -14,7 +14,7 @@ export default function AdminLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // SWR pings your API endpoint quietly every 6000ms (6 seconds)
-  const { data, mutate } = useSWR("/api/bookings", fetcher, { refreshInterval: 6000 });
+  const { data } = useSWR("/api/bookings", fetcher, { refreshInterval: 6000 });
 
   // Tracking the full array of previous bookings instead of just a number count
   const [previousBookings, setPreviousBookings] = useState([]);
@@ -34,7 +34,7 @@ export default function AdminLayout({ children }) {
         duration: 6000,
         style: { background: "#1e293b", color: "#fff", border: "1px solid #334155" }
       });
-      mutate();
+      router.refresh();
     }
 
     // Loop through old records to catch column updates (STATUS, PAYMENT, AMOUNT)
@@ -52,7 +52,7 @@ export default function AdminLayout({ children }) {
             duration: 6000,
             style: { background: "#16a34a", color: "#fff" }
           });
-          mutate();
+          router.refresh();
         }
 
         // Checks if finalPrice, locations, customer data, times, or fields from your schema changed
@@ -74,14 +74,14 @@ export default function AdminLayout({ children }) {
           toast.success(`Details updated for row ${freshRow._id}`, {
             duration: 5000,
           });
-          mutate();
+          router.refresh();
         }
       }
     });
 
     // Save the current rows so we can compare them on the next 6-second tick
     setPreviousBookings(data.bookings);
-  }, [data, mutate]);
+  }, [data, router, previousBookings]);
 
   async function handleLogout() {
     const res = await fetch("/api/admin/logout", {

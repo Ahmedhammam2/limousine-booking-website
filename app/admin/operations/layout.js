@@ -13,40 +13,67 @@ export default function AdminLayout({ children }) {
   const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-
-  //  SWR to ping API endpoint quietly every 6000ms (6 seconds)
+  // SWR pings your API endpoint quietly every 6000ms (6 seconds)
   const { data } = useSWR("/api/bookings", fetcher, { refreshInterval: 6000 });
 
-  //  Local memory to preserve the number of bookings during your session
-  const [totalBookingsCount, setTotalBookingsCount] = useState(null);
+  // CHANGED: Tracking the full array of previous bookings instead of just a number count
+  const [previousBookings, setPreviousBookings] = useState([]);
 
   useEffect(() => {
-    // If the database has a slow response or hasn't loaded data yet
+    // If the database has a slow response or hasn't loaded data yet, stop here
     if (!data || !data.bookings) return;
 
-    const currentCount = data.bookings.length;
-
-    //  The Comparison Core: Trigger alerts ONLY if the new database count is larger than before
-    if (totalBookingsCount !== null && currentCount > totalBookingsCount) {
-
-
+    // 1. Check for a brand NEW booking (array length grew)
+    if (previousBookings.length > 0 && data.bookings.length > previousBookings.length) {
       const alertSound = new Audio("/sounds/notification.mp3");
       alertSound.play().catch(() =>
-        console.log("Audio alert was blocked by your browser until you interact with the page first.")
+        console.log("Audio alert blocked by browser until initial user interaction.")
       );
 
-
-      toast.success("New booking added!", {
+      toast.success(" New booking added!", {
         duration: 6000,
         style: { background: "#1e293b", color: "#fff", border: "1px solid #334155" }
       });
     }
 
-    //  Keep the tracker updated to match the new database array length
-    setTotalBookingsCount(currentCount);
-  }, [data, totalBookingsCount]);
+    // Loop through old records to catch column updates (STATUS, PAYMENT, AMOUNT)
+    previousBookings.forEach((oldRow) => {
+      // Find the exact same document in the fresh data snapshot
+      const freshRow = data.bookings.find((b) => b._id === oldRow._id);
 
+      if (freshRow) {
+        //Check if PAYMENT status flipped from unpaid to paid
+        if (oldRow.paymentStatus === "unpaid" && freshRow.paymentStatus === "paid") {
+          const alertSound = new Audio("/sounds/notification.mp3");
+          alertSound.play().catch(() => { });
 
+          toast.success(`Payment Received from ${freshRow.customerName} in row ${freshRow._id}    `, {
+            duration: 6000,
+            style: { background: "#16a34a", color: "#fff" } // Green background for money
+          });
+        }
+
+        //  Check if STATUS changed (e.g., pending -> confirmed)
+        if (oldRow.status !== freshRow.status) {
+          toast(`Status updated: ${freshRow.status.toUpperCase()} in row ${freshRow._id} `,
+            {
+              duration: 5000,
+              style: { background: "#1e293b", color: "#fff" }
+            });
+        }
+
+        // Check if AMOUNT (price) changed during an admin edit
+        if (oldRow.finalPrice !== freshRow.finalPrice) {
+          toast.success(`Price updated to $${freshRow.finalPrice} in row ${freshRow._id}   `, {
+            duration: 5000,
+          });
+        }
+      }
+    });
+
+    // Save the current rows so we can compare them on the next 6-second tick
+    setPreviousBookings(data.bookings);
+  }, [data, previousBookings]);
 
   async function handleLogout() {
     const res = await fetch("/api/admin/logout", {

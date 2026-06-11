@@ -8,7 +8,11 @@ import useSWR from "swr";
 
 // A small utility function that SWR needs to handle fetching and transforming data into JSON
 const fetcher = (url) => fetch(url).then((res) => res.json());
-
+function delayedRefresh() {
+  setTimeout(() => {
+    window.location.reload();
+  }, 5000);
+}
 export default function AdminLayout({ children }) {
   const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -34,7 +38,7 @@ export default function AdminLayout({ children }) {
         duration: 6000,
         style: { background: "#1e293b", color: "#fff", border: "1px solid #334155" }
       });
-      router.refresh();
+      delayedRefresh();
     }
 
     // Loop through old records to catch column updates (STATUS, PAYMENT, AMOUNT)
@@ -52,7 +56,7 @@ export default function AdminLayout({ children }) {
             duration: 6000,
             style: { background: "#16a34a", color: "#fff" }
           });
-          router.refresh();
+          delayedRefresh();
         }
 
         // Checks if finalPrice, locations, customer data, times, or fields from your schema changed
@@ -74,7 +78,7 @@ export default function AdminLayout({ children }) {
           toast.success(`Details updated for row ${freshRow._id}`, {
             duration: 5000,
           });
-          router.refresh();
+          delayedRefresh();
         }
       }
     });

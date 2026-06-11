@@ -66,16 +66,17 @@ export default function BookingsTable({ bookings }) {
                 <tr
                   key={booking._id}
                   className={`border-t ${!isEditable
-                      ? "bg-gray-100 text-gray-400"
-                      : "hover:bg-gray-50"
+                    ? "bg-gray-100 text-gray-400"
+                    : "hover:bg-gray-50"
                     }`}
                 >
                   <td className="p-3 font-mono text-xs">
                     {booking._id.slice(-6)}
                   </td>
 
+
                   <td className="p-3">
-                    {new Date(booking.date).toLocaleDateString()}
+                    {new Date(booking.date).toLocaleDateString("en-US", { year: "numeric", month: "2-digit", day: "2-digit" })}
                   </td>
 
                   <td className="p-3">
@@ -105,13 +106,13 @@ export default function BookingsTable({ bookings }) {
                   <td className="p-3">
                     <span
                       className={`px-2 py-1 rounded text-xs font-semibold ${booking.status === "confirmed"
-                          ? "bg-green-100 text-green-700"
-                          : booking.status === "pending"
-                            ? "bg-yellow-100 text-yellow-700"
-                            : booking.status === "no-show" ||
-                              booking.status === "canceled"
-                              ? "bg-gray-300 text-gray-700"
-                              : "bg-red-100 text-red-700"
+                        ? "bg-green-100 text-green-700"
+                        : booking.status === "pending"
+                          ? "bg-yellow-100 text-yellow-700"
+                          : booking.status === "no-show" ||
+                            booking.status === "canceled"
+                            ? "bg-gray-300 text-gray-700"
+                            : "bg-red-100 text-red-700"
                         }`}
                     >
                       {booking.status}
@@ -121,8 +122,8 @@ export default function BookingsTable({ bookings }) {
                   <td className="p-3">
                     <span
                       className={`px-2 py-1 rounded text-xs font-semibold ${booking.paymentStatus === "paid"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-gray-200 text-gray-700"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-gray-200 text-gray-700"
                         }`}
                     >
                       {booking.paymentStatus}
@@ -210,7 +211,7 @@ export default function BookingsTable({ bookings }) {
                       Date & Time
                     </div>
                     <div className="text-sm">
-                      {new Date(booking.date).toLocaleDateString()}
+                      {new Date(booking.date).toLocaleDateString("en-US", { year: "numeric", month: "2-digit", day: "2-digit" })}
                     </div>
                     <div className="text-xs">
                       {new Date(booking.startTime).toLocaleTimeString([], {
@@ -245,13 +246,13 @@ export default function BookingsTable({ bookings }) {
                 <div className="flex flex-wrap items-center gap-2">
                   <span
                     className={`px-2 py-1 rounded text-xs font-semibold ${booking.status === "confirmed"
-                        ? "bg-green-100 text-green-700"
-                        : booking.status === "pending"
-                          ? "bg-yellow-100 text-yellow-700"
-                          : booking.status === "no-show" ||
-                            booking.status === "canceled"
-                            ? "bg-gray-300 text-gray-700"
-                            : "bg-red-100 text-red-700"
+                      ? "bg-green-100 text-green-700"
+                      : booking.status === "pending"
+                        ? "bg-yellow-100 text-yellow-700"
+                        : booking.status === "no-show" ||
+                          booking.status === "canceled"
+                          ? "bg-gray-300 text-gray-700"
+                          : "bg-red-100 text-red-700"
                       }`}
                   >
                     {booking.status}
@@ -259,8 +260,8 @@ export default function BookingsTable({ bookings }) {
 
                   <span
                     className={`px-2 py-1 rounded text-xs font-semibold ${booking.paymentStatus === "paid"
-                        ? "bg-green-100 text-green-700"
-                        : "bg-gray-200 text-gray-700"
+                      ? "bg-green-100 text-green-700"
+                      : "bg-gray-200 text-gray-700"
                       }`}
                   >
                     {booking.paymentStatus}

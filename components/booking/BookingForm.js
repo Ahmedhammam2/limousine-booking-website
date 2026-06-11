@@ -210,7 +210,7 @@ function BookingFormInner({ isEditing, initialData, bookingId }) {
       startTimestamp: String(startDT.getTime()),
       endTimestamp1: String(endDT.getTime()),
       startISO: startDT.toISOString(),
-      date: startDT.toLocaleDateString(),
+      date: startDT.toISOString(),
       pickupLocation,
       dropoffLocation,
       stops: JSON.stringify(stops),
@@ -295,8 +295,8 @@ function BookingFormInner({ isEditing, initialData, bookingId }) {
           {/* Hourly duration selector with smooth slide-down animation */}
           <div
             className={`overflow-hidden transition-all duration-500 ease-out ${tripType === "hourly"
-                ? "max-h-40 opacity-100"
-                : "max-h-0 opacity-0"
+              ? "max-h-40 opacity-100"
+              : "max-h-0 opacity-0"
               }`}
           >
             <DurationSelector

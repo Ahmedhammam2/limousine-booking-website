@@ -14,9 +14,9 @@ export default function AdminLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // SWR pings your API endpoint quietly every 6000ms (6 seconds)
-  const { data } = useSWR("/api/bookings", fetcher, { refreshInterval: 6000 });
+  const { data, mutate } = useSWR("/api/bookings", fetcher, { refreshInterval: 6000 });
 
-  // CHANGED: Tracking the full array of previous bookings instead of just a number count
+  // Tracking the full array of previous bookings instead of just a number count
   const [previousBookings, setPreviousBookings] = useState([]);
 
   useEffect(() => {
@@ -34,6 +34,7 @@ export default function AdminLayout({ children }) {
         duration: 6000,
         style: { background: "#1e293b", color: "#fff", border: "1px solid #334155" }
       });
+      mutate();
     }
 
     // Loop through old records to catch column updates (STATUS, PAYMENT, AMOUNT)
@@ -42,38 +43,45 @@ export default function AdminLayout({ children }) {
       const freshRow = data.bookings.find((b) => b._id === oldRow._id);
 
       if (freshRow) {
-        //Check if PAYMENT status flipped from unpaid to paid
-        if (oldRow.paymentStatus === "unpaid" && freshRow.paymentStatus === "paid") {
+        // Check if PAYMENT status flipped from unpaid to paid or status changed
+        if ((oldRow.paymentStatus === "unpaid" && freshRow.paymentStatus === "paid") || (oldRow.status !== freshRow.status)) {
           const alertSound = new Audio("/sounds/notification.mp3");
           alertSound.play().catch(() => { });
 
-          toast.success(`Payment Received from ${freshRow.customerName} in row ${freshRow._id}    `, {
+          toast.success(`Booking updated from ${freshRow.customerName} in row ${freshRow._id}    `, {
             duration: 6000,
-            style: { background: "#16a34a", color: "#fff" } // Green background for money
+            style: { background: "#16a34a", color: "#fff" }
           });
+          mutate();
         }
 
-        //  Check if STATUS changed (e.g., pending -> confirmed)
-        if (oldRow.status !== freshRow.status) {
-          toast(`Status updated: ${freshRow.status.toUpperCase()} in row ${freshRow._id} `,
-            {
-              duration: 5000,
-              style: { background: "#1e293b", color: "#fff" }
-            });
-        }
-
-        // Check if AMOUNT (price) changed during an admin edit
-        if (oldRow.finalPrice !== freshRow.finalPrice) {
-          toast.success(`Price updated to $${freshRow.finalPrice} in row ${freshRow._id}   `, {
+        // Checks if finalPrice, locations, customer data, times, or fields from your schema changed
+        if (
+          oldRow.finalPrice !== freshRow.finalPrice ||
+          oldRow.customerName !== freshRow.customerName ||
+          oldRow.customerPhone !== freshRow.customerPhone ||
+          oldRow.customerEmail !== freshRow.customerEmail ||
+          oldRow.date !== freshRow.date ||
+          oldRow.startTime !== freshRow.startTime ||
+          oldRow.endTime !== freshRow.endTime ||
+          oldRow.carId !== freshRow.carId ||
+          oldRow.pickupLocation !== freshRow.pickupLocation ||
+          oldRow.dropoffLocation !== freshRow.dropoffLocation ||
+          oldRow.tripType !== freshRow.tripType ||
+          oldRow.passengers !== freshRow.passengers ||
+          oldRow.luggage !== freshRow.luggage
+        ) {
+          toast.success(`Details updated for row ${freshRow._id}`, {
             duration: 5000,
           });
+          mutate();
         }
       }
     });
 
     // Save the current rows so we can compare them on the next 6-second tick
     setPreviousBookings(data.bookings);
-  }, [data, previousBookings]);
+  }, [data, mutate]);
 
   async function handleLogout() {
     const res = await fetch("/api/admin/logout", {
@@ -167,7 +175,6 @@ export default function AdminLayout({ children }) {
         <main className="p-3 sm:p-4 md:p-6 flex-1 overflow-auto">
           {children}
         </main>
-        {/* The toast provider handles injecting the styling popups cleanly into view */}
         <Toaster position="top-right" />
       </div>
     </div>

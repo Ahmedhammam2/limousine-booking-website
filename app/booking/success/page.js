@@ -182,6 +182,8 @@ export default async function SuccessPage({ searchParams }) {
           <ul className="space-y-1.5 sm:space-y-2 text-gray-600 text-xs sm:text-sm list-inside list-disc">
             <li>Driver will contact you before pickup</li>
             <li>Save your booking reference for future use</li>
+            <li>You'll receive a confirmation email</li>
+
           </ul>
         </div>
 

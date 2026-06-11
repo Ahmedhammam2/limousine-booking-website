@@ -88,6 +88,8 @@ export async function POST(request) {
             <p><strong>Pickup Location:</strong> ${body.pickupLocation}</p>
             <p><strong>Drop-off Location:</strong> ${body.dropoffLocation}</p>
             <p><strong>Estimated Cost:</strong> $${body.finalPrice}</p>
+            <p><strong>Receipt:</strong> ${newBooking._id}</p>
+            <p>If you did not sign up for this you can ignore this email</p>
             <hr />
             
           `,
@@ -106,5 +108,17 @@ export async function POST(request) {
       return Response.json({ error: `Validation Failed: ${messages.join(", ")}` }, { status: 400 });
     }
     return Response.json({ error: error.message }, { status: 400 });
+  }
+}
+
+
+export async function GET() {
+  try {
+    await connectDB();
+    // Fetch bookings sorted by the newest first
+    const bookings = await Booking.find({}).sort({ createdAt: -1 });
+    return Response.json({ bookings }, { status: 200 });
+  } catch (error) {
+    return Response.json({ error: error.message }, { status: 500 });
   }
 }

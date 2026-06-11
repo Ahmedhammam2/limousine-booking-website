@@ -164,8 +164,18 @@ function BookingFormInner({ isEditing, initialData, bookingId }) {
   // Merge selected date and time into a single DateTime object
   const buildStartDateTime = () => {
     if (!date || !startTime) return null;
-    const d = new Date(date);
-    d.setHours(startTime.getHours(), startTime.getMinutes(), 0, 0);
+
+    // Extracts exact numbers so JavaScript can never guess month vs day
+    const d = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      startTime.getHours(),
+      startTime.getMinutes(),
+      0,
+      0
+    );
+
     return d;
   };
 

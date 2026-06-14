@@ -30,6 +30,7 @@ This system digitizes the limousine booking process by allowing customers to boo
 
 - Stripe (Payments)
 - Cloudinary (Image Hosting & Management)
+- Resend (Email Dispatch & Transactional Alerts)
 - Google Maps Platform APIs
   - Directions API
   - Distance Matrix API
@@ -46,6 +47,7 @@ This system digitizes the limousine booking process by allowing customers to boo
 - React Calendar
 - React Icons
 - Bcrypt & Jose (Secure JWT Authentication)
+- SWR (State Management & Data Fetching)
 
 ## Features
 
@@ -72,6 +74,9 @@ This system digitizes the limousine booking process by allowing customers to boo
 - Update booking status (confirm, cancel, no-show)
 - Delete bookings
 - Edit existing bookings
+- Real-time live admin dashboard polling every 6 seconds using SWR
+- Interactive visual toasts and audio alerts on new bookings, status updates, or detail changes
+- Auto-refreshing dashboard state synchronized post-updates
 
 #### Analytics Dashboard
 
@@ -161,6 +166,8 @@ The analytics system is designed to answer critical business questions:
 - **Can access comprehensive analytics dashboard**
 - **Can view business performance metrics across different time periods**
 - **Can export and analyze fleet utilization data**
+- **Receives email alerts for new booking requests**
+- **Receives real-time audio and visual notifications on dashboard updates**
 
 ## System Architecture
 
@@ -737,6 +744,8 @@ cp .env.example .env.local
 | `STRIPE_WEBHOOK_SECRET`              | Stripe webhook signing secret  | [Stripe Webhooks](https://dashboard.stripe.com/webhooks) |
 | `ADMIN_PASSWORD_HASH`                | Admin panel password hash      | Generate using bcrypt                            |
 | `JWT_SECRET`                         | JSON Web Token secret          | Generate 32-byte random hex string                       |
+| `NEXT_PUBLIC_URL`                    | Base URL of the application    | e.g. http://localhost:3000 or production domain          |
+| `RESEND_API_KEY`                     | Resend API Key                 | [Resend Dashboard](https://resend.com)                   |
 
 ## Database Schema
 
@@ -874,7 +883,9 @@ The system uses session-based authentication for admin routes.
 
 - Password is cryptographically hashed with bcrypt
 - Sessions use JWT signed with a secret to prevent forging
-- No rate limiting implemented (should be added)
+- Rate limiting implemented on all `/api/*` endpoints (max 20 requests per minute per IP)
+- Anti-cache headers enforced on all `/admin/*` routes to prevent unauthorized browser navigation back/forward actions
+- Automated cookie expiration and cleanup on JWT validation failure
 - No multi-user support
 
 ### Analytics Query Optimization
@@ -888,11 +899,9 @@ The analytics system uses MongoDB aggregation pipelines for efficient data proce
 
 ## Known Limitations
 
-- No email notifications for booking confirmations
 - No SMS notifications
 - Customers cannot cancel or modify bookings after payment themselves (refunds , cancellation and edits are only initiated via admin booking edits)
 - Single admin account only (no multi-admin support)
-- No rate limiting on API endpoints
 - No booking history for customers
 - Google Maps API calls are not cached
 - No data export functionality (CSV/Excel downloads not implemented)\*\*
